@@ -1,0 +1,23 @@
+-- Table: public.fatura
+
+-- DROP TABLE IF EXISTS public.fatura;
+
+CREATE TABLE IF NOT EXISTS public.fatura
+(
+    faturaid integer NOT NULL,
+    siparisid integer NOT NULL,
+    tarih date,
+    toplamtutar numeric,
+    durum character varying COLLATE pg_catalog."default",
+    aciklama text COLLATE pg_catalog."default",
+    CONSTRAINT fatura_pkey PRIMARY KEY (faturaid),
+    CONSTRAINT fk_siparis FOREIGN KEY (siparisid)
+        REFERENCES public.siparis (siparisid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.fatura
+    OWNER to postgres;
