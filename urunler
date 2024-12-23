@@ -1,0 +1,25 @@
+-- Table: public.urunler
+
+-- DROP TABLE IF EXISTS public.urunler;
+
+CREATE TABLE IF NOT EXISTS public.urunler
+(
+    urunid integer NOT NULL,
+    urunadi character varying(100) COLLATE pg_catalog."default",
+    fiyat numeric,
+    kategori character varying(50) COLLATE pg_catalog."default",
+    stokmiktar integer,
+    aciklama text COLLATE pg_catalog."default",
+    tedarikciid integer,
+    stokmiktari integer,
+    CONSTRAINT urunler_pkey PRIMARY KEY (urunid),
+    CONSTRAINT fk_tedarikciid FOREIGN KEY (tedarikciid)
+        REFERENCES public.tedarikciler (tedarikciid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.urunler
+    OWNER to postgres;
