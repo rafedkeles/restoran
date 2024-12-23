@@ -1,0 +1,28 @@
+-- Table: public.odeme
+
+-- DROP TABLE IF EXISTS public.odeme;
+
+CREATE TABLE IF NOT EXISTS public.odeme
+(
+    odemeid integer NOT NULL DEFAULT nextval('odeme_odemeid_seq'::regclass),
+    siparisid integer NOT NULL,
+    musteriid integer,
+    tutar numeric,
+    odemetipi character varying COLLATE pg_catalog."default",
+    tarih date,
+    menuid integer,
+    CONSTRAINT odeme_pkey PRIMARY KEY (odemeid),
+    CONSTRAINT fk_menuid FOREIGN KEY (menuid)
+        REFERENCES public.menu (menuid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_siparis FOREIGN KEY (siparisid)
+        REFERENCES public.siparis (siparisid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.odeme
+    OWNER to postgres;
