@@ -1,0 +1,67 @@
+-- Table: public.siparis
+
+-- DROP TABLE IF EXISTS public.siparis;
+
+CREATE TABLE IF NOT EXISTS public.siparis
+(
+    siparisid integer NOT NULL,
+    calisanid integer,
+    musteriid integer,
+    tarih date,
+    teslim_tarih date,
+    tur character varying COLLATE pg_catalog."default",
+    tutar numeric,
+    durum character varying COLLATE pg_catalog."default",
+    odemetipi character varying COLLATE pg_catalog."default",
+    adres text COLLATE pg_catalog."default",
+    notlar text COLLATE pg_catalog."default",
+    urunid integer,
+    masaid integer,
+    kampanyaid integer,
+    CONSTRAINT siparis_pkey PRIMARY KEY (siparisid),
+    CONSTRAINT fk_calisanid FOREIGN KEY (calisanid)
+        REFERENCES public.calisanlar (calisanid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_kampanyaid FOREIGN KEY (kampanyaid)
+        REFERENCES public.kampanyalar (kampanyaid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_masaid FOREIGN KEY (masaid)
+        REFERENCES public.masa (masaid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_musteriid FOREIGN KEY (musteriid)
+        REFERENCES public.musteriler (musteriid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_urunid FOREIGN KEY (urunid)
+        REFERENCES public.urunler (urunid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.siparis
+    OWNER to postgres;
+
+-- Trigger: after_insert_siparis
+
+-- DROP TRIGGER IF EXISTS after_insert_siparis ON public.siparis;
+
+CREATE OR REPLACE TRIGGER after_insert_siparis
+    AFTER INSERT
+    ON public.siparis
+    FOR EACH ROW
+    EXECUTE FUNCTION public.transfer_siparis_data();
+
+-- Trigger: siparis_trigger
+
+-- DROP TRIGGER IF EXISTS siparis_trigger ON public.siparis;
+
+CREATE OR REPLACE TRIGGER siparis_trigger
+    BEFORE INSERT
+    ON public.siparis
+    FOR EACH ROW
+    EXECUTE FUNCTION public.transfer_siparis_data();
