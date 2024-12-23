@@ -1,0 +1,23 @@
+-- Table: public.bakim
+
+-- DROP TABLE IF EXISTS public.bakim;
+
+CREATE TABLE IF NOT EXISTS public.bakim
+(
+    bakimid integer NOT NULL DEFAULT nextval('bakim_bakimid_seq'::regclass),
+    masaid integer,
+    durum character varying(50) COLLATE pg_catalog."default",
+    baslangictarihi date,
+    bitistarihi date,
+    notlar text COLLATE pg_catalog."default",
+    CONSTRAINT bakim_pkey PRIMARY KEY (bakimid),
+    CONSTRAINT fk_masaid FOREIGN KEY (masaid)
+        REFERENCES public.masa (masaid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.bakim
+    OWNER to postgres;
