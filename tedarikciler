@@ -1,0 +1,19 @@
+-- Table: public.tedarikciler
+
+-- DROP TABLE IF EXISTS public.tedarikciler;
+
+CREATE TABLE IF NOT EXISTS public.tedarikciler
+(
+    tedarikciid integer NOT NULL DEFAULT nextval('tedarikciler_tedarikciid_seq'::regclass),
+    ad character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    telefon character varying(20) COLLATE pg_catalog."default",
+    email character varying(100) COLLATE pg_catalog."default",
+    adres text COLLATE pg_catalog."default",
+    durum character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT tedarikciler_pkey PRIMARY KEY (tedarikciid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tedarikciler
+    OWNER to postgres;
