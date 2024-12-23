@@ -1,0 +1,27 @@
+-- Table: public.menu
+
+-- DROP TABLE IF EXISTS public.menu;
+
+CREATE TABLE IF NOT EXISTS public.menu
+(
+    menuid integer NOT NULL DEFAULT nextval('menu_menuid_seq'::regclass),
+    urunid integer,
+    kategori character varying(100) COLLATE pg_catalog."default",
+    fiyat numeric,
+    durum character varying(50) COLLATE pg_catalog."default",
+    kampanyaid integer,
+    CONSTRAINT menu_pkey PRIMARY KEY (menuid),
+    CONSTRAINT fk_kampanyaid FOREIGN KEY (kampanyaid)
+        REFERENCES public.kampanyalar (kampanyaid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_urunid FOREIGN KEY (urunid)
+        REFERENCES public.urunler (urunid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.menu
+    OWNER to postgres;
