@@ -1,0 +1,17 @@
+-- Table: public.etkinlikler
+
+-- DROP TABLE IF EXISTS public.etkinlikler;
+
+CREATE TABLE IF NOT EXISTS public.etkinlikler
+(
+    etkinlikid integer NOT NULL DEFAULT nextval('etkinlikler_etkinlikid_seq'::regclass),
+    ad character varying(100) COLLATE pg_catalog."default",
+    katilimcisayisi integer,
+    aktiviteid integer NOT NULL DEFAULT nextval('etkinlikler_aktiviteid_seq'::regclass),
+    CONSTRAINT etkinlikler_pkey PRIMARY KEY (etkinlikid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.etkinlikler
+    OWNER to postgres;
