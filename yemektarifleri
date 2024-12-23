@@ -1,0 +1,24 @@
+-- Table: public.yemektarifleri
+
+-- DROP TABLE IF EXISTS public.yemektarifleri;
+
+CREATE TABLE IF NOT EXISTS public.yemektarifleri
+(
+    tarifid integer NOT NULL DEFAULT nextval('yemektarifleri_tarifid_seq'::regclass),
+    adi character varying(100) COLLATE pg_catalog."default",
+    aciklama text COLLATE pg_catalog."default",
+    malzemeler text COLLATE pg_catalog."default",
+    hazirliksuresi integer,
+    pisirmesuresi integer,
+    menuid integer,
+    CONSTRAINT yemektarifleri_pkey PRIMARY KEY (tarifid),
+    CONSTRAINT fk_menuid FOREIGN KEY (menuid)
+        REFERENCES public.menu (menuid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.yemektarifleri
+    OWNER to postgres;
