@@ -1,0 +1,30 @@
+-- Table: public.rezervasyon
+
+-- DROP TABLE IF EXISTS public.rezervasyon;
+
+CREATE TABLE IF NOT EXISTS public.rezervasyon
+(
+    rezervasyonid integer NOT NULL DEFAULT nextval('rezervasyon_rezervasyonid_seq'::regclass),
+    musteriid integer,
+    masaid integer,
+    etkinlikid integer,
+    aktiviteid integer NOT NULL DEFAULT nextval('rezervasyon_aktiviteid_seq'::regclass),
+    CONSTRAINT rezervasyon_pkey PRIMARY KEY (rezervasyonid),
+    CONSTRAINT fk_etkinlikid FOREIGN KEY (etkinlikid)
+        REFERENCES public.etkinlikler (etkinlikid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_masaid FOREIGN KEY (masaid)
+        REFERENCES public.masa (masaid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_musteriid FOREIGN KEY (musteriid)
+        REFERENCES public.musteriler (musteriid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.rezervasyon
+    OWNER to postgres;
