@@ -1,0 +1,19 @@
+-- Table: public.kampanyalar
+
+-- DROP TABLE IF EXISTS public.kampanyalar;
+
+CREATE TABLE IF NOT EXISTS public.kampanyalar
+(
+    kampanyaid integer NOT NULL,
+    adi character varying(100) COLLATE pg_catalog."default",
+    aciklama text COLLATE pg_catalog."default",
+    baslangictarihi date,
+    bitistarihi date,
+    durum character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT kampanyalar_pkey PRIMARY KEY (kampanyaid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.kampanyalar
+    OWNER to postgres;
