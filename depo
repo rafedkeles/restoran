@@ -1,0 +1,24 @@
+-- Table: public.depo
+
+-- DROP TABLE IF EXISTS public.depo;
+
+CREATE TABLE IF NOT EXISTS public.depo
+(
+    -- Inherited from table public.urunler: urunid integer NOT NULL,
+    -- Inherited from table public.urunler: urunadi character varying(100) COLLATE pg_catalog."default",
+    -- Inherited from table public.urunler: fiyat numeric,
+    -- Inherited from table public.urunler: kategori character varying(50) COLLATE pg_catalog."default",
+    -- Inherited from table public.urunler: stokmiktar integer,
+    -- Inherited from table public.urunler: aciklama text COLLATE pg_catalog."default",
+    -- Inherited from table public.urunler: tedarikciid integer,
+    -- Inherited from table public.urunler: stokmiktari integer,
+    depoid integer NOT NULL DEFAULT nextval('depo_depoid_seq'::regclass),
+    depokonumu character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT depo_pkey PRIMARY KEY (depoid)
+)
+    INHERITS (public.urunler)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.depo
+    OWNER to postgres;
