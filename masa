@@ -1,0 +1,17 @@
+-- Table: public.masa
+
+-- DROP TABLE IF EXISTS public.masa;
+
+CREATE TABLE IF NOT EXISTS public.masa
+(
+    masaid integer NOT NULL,
+    durum character varying(50) COLLATE pg_catalog."default",
+    kisitsayisi integer,
+    aciklama text COLLATE pg_catalog."default",
+    CONSTRAINT masa_pkey PRIMARY KEY (masaid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.masa
+    OWNER to postgres;
