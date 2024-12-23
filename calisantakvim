@@ -1,0 +1,32 @@
+-- Table: public.calisantakvim
+
+-- DROP TABLE IF EXISTS public.calisantakvim;
+
+CREATE TABLE IF NOT EXISTS public.calisantakvim
+(
+    takvimid integer NOT NULL DEFAULT nextval('calisantakvim_takvimid_seq'::regclass),
+    -- Inherited from table public.calisanlar: calisanid integer NOT NULL,
+    tarih date,
+    baslangicsaati time without time zone,
+    bitsaati time without time zone,
+    -- Inherited from table public.calisanlar: gorev character varying(100) COLLATE pg_catalog."default",
+    -- Inherited from table public.calisanlar: ad character varying(50) COLLATE pg_catalog."default",
+    -- Inherited from table public.calisanlar: soyad character varying(50) COLLATE pg_catalog."default",
+    -- Inherited from table public.calisanlar: telefon character varying(50) COLLATE pg_catalog."default",
+    -- Inherited from table public.calisanlar: email character varying(100) COLLATE pg_catalog."default",
+    -- Inherited from table public.calisanlar: maas numeric(10,2),
+    -- Inherited from table public.calisanlar: giristarihi date,
+    -- Inherited from table public.calisanlar: durum character varying(50) COLLATE pg_catalog."default",
+    -- Inherited from table public.calisanlar: yetkiliid integer,
+    CONSTRAINT calisantakvim_pkey PRIMARY KEY (takvimid),
+    CONSTRAINT fk_calisanid FOREIGN KEY (calisanid)
+        REFERENCES public.calisanlar (calisanid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+    INHERITS (public.calisanlar)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.calisantakvim
+    OWNER to postgres;
