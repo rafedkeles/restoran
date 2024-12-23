@@ -1,0 +1,27 @@
+-- Table: public.sikayetler
+
+-- DROP TABLE IF EXISTS public.sikayetler;
+
+CREATE TABLE IF NOT EXISTS public.sikayetler
+(
+    sikayetid integer NOT NULL DEFAULT nextval('sikayetler_sikayetid_seq'::regclass),
+    musteriid integer,
+    siparisid integer,
+    sikayetmetni text COLLATE pg_catalog."default",
+    durum character varying(50) COLLATE pg_catalog."default",
+    tarih date,
+    CONSTRAINT sikayetler_pkey PRIMARY KEY (sikayetid),
+    CONSTRAINT fk_musteriid FOREIGN KEY (musteriid)
+        REFERENCES public.musteriler (musteriid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_siparisid FOREIGN KEY (siparisid)
+        REFERENCES public.siparis (siparisid) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.sikayetler
+    OWNER to postgres;
