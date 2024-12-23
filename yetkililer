@@ -1,0 +1,19 @@
+-- Table: public.yetkililer
+
+-- DROP TABLE IF EXISTS public.yetkililer;
+
+CREATE TABLE IF NOT EXISTS public.yetkililer
+(
+    yetkilid integer NOT NULL DEFAULT nextval('yetkililer_yetkilid_seq'::regclass),
+    ad character varying(100) COLLATE pg_catalog."default",
+    soyad character varying(100) COLLATE pg_catalog."default",
+    email character varying(100) COLLATE pg_catalog."default",
+    telefon character varying(20) COLLATE pg_catalog."default",
+    gorev character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT yetkililer_pkey PRIMARY KEY (yetkilid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.yetkililer
+    OWNER to postgres;
