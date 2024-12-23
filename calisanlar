@@ -1,0 +1,23 @@
+-- Table: public.calisanlar
+
+-- DROP TABLE IF EXISTS public.calisanlar;
+
+CREATE TABLE IF NOT EXISTS public.calisanlar
+(
+    calisanid integer NOT NULL DEFAULT nextval('calisanlar_calisanid_seq'::regclass),
+    ad character varying(50) COLLATE pg_catalog."default",
+    soyad character varying(50) COLLATE pg_catalog."default",
+    telefon character varying(50) COLLATE pg_catalog."default",
+    email character varying(100) COLLATE pg_catalog."default",
+    gorev character varying(100) COLLATE pg_catalog."default",
+    maas numeric(10,2),
+    giristarihi date,
+    durum character varying(50) COLLATE pg_catalog."default",
+    yetkiliid integer,
+    CONSTRAINT calisanlar_pkey PRIMARY KEY (calisanid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.calisanlar
+    OWNER to postgres;
