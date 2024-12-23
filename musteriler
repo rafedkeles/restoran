@@ -1,1 +1,21 @@
 
+-- Table: public.musteriler
+
+-- DROP TABLE IF EXISTS public.musteriler;
+
+CREATE TABLE IF NOT EXISTS public.musteriler
+(
+    musteriid integer NOT NULL DEFAULT nextval('musteriler_musteriid_seq'::regclass),
+    ad character varying(100) COLLATE pg_catalog."default",
+    soyad character varying(100) COLLATE pg_catalog."default",
+    telefon character varying(15) COLLATE pg_catalog."default",
+    email character varying(100) COLLATE pg_catalog."default",
+    adres text COLLATE pg_catalog."default",
+    kayittarihi date,
+    CONSTRAINT musteriler_pkey PRIMARY KEY (musteriid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.musteriler
+    OWNER to postgres;
