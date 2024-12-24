@@ -1,0 +1,37 @@
+-- PROCEDURE: public.find_duplicate_customers()
+
+-- DROP PROCEDURE IF EXISTS public.find_duplicate_customers();
+
+CREATE OR REPLACE PROCEDURE public.find_duplicate_customers(
+	)
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+    record RECORD;
+BEGIN
+    -- Duplicate customers by name
+    RAISE NOTICE 'Duplicate customers by name:';
+    FOR record IN
+        SELECT ad, COUNT(*)
+        FROM musteriler
+        GROUP BY ad
+        HAVING COUNT(*) > 1
+    LOOP
+        RAISE NOTICE 'Name: %, Count: %', record.ad, record.count;
+    END LOOP;
+
+    -- Duplicate customers by email
+    RAISE NOTICE 'Duplicate customers by email:';
+    FOR record IN
+        SELECT email, COUNT(*)
+        FROM musteriler
+        WHERE email IS NOT NULL AND email <> ''
+        GROUP BY email
+        HAVING COUNT(*) > 1
+    LOOP
+        RAISE NOTICE 'Email: %, Count: %', record.email, record.count;
+    END LOOP;
+END;
+$BODY$;
+ALTER PROCEDURE public.find_duplicate_customers()
+    OWNER TO postgres;
