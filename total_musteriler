@@ -1,0 +1,23 @@
+-- FUNCTION: public.total_musteriler()
+
+-- DROP FUNCTION IF EXISTS public.total_musteriler();
+
+CREATE OR REPLACE FUNCTION public.total_musteriler(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+    cnt INT := 0;
+BEGIN
+    SELECT COUNT(*) INTO cnt
+      FROM musteriler; 
+    
+    RETURN cnt; 
+END;
+$BODY$;
+
+ALTER FUNCTION public.total_musteriler()
+    OWNER TO postgres;
