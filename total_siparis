@@ -1,0 +1,23 @@
+-- FUNCTION: public.total_siparis()
+
+-- DROP FUNCTION IF EXISTS public.total_siparis();
+
+CREATE OR REPLACE FUNCTION public.total_siparis(
+	)
+    RETURNS numeric
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+    total_value NUMERIC := 0;
+BEGIN
+    SELECT COALESCE(SUM(tutar), 0)
+      INTO total_value
+      FROM siparis;
+    RETURN total_value;
+END;
+$BODY$;
+
+ALTER FUNCTION public.total_siparis()
+    OWNER TO postgres;
