@@ -1,0 +1,19 @@
+-- PROCEDURE: public.calculate_total_reservations()
+
+-- DROP PROCEDURE IF EXISTS public.calculate_total_reservations();
+
+CREATE OR REPLACE PROCEDURE public.calculate_total_reservations(
+	)
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+    toplam_rezervasyonlar INT;  
+BEGIN
+    SELECT COUNT(*)
+    INTO toplam_rezervasyonlar
+    FROM rezervasyon;
+    RAISE NOTICE 'Toplam rezervasyon sayısı: %', toplam_rezervasyonlar;
+END;
+$BODY$;
+ALTER PROCEDURE public.calculate_total_reservations()
+    OWNER TO postgres;
