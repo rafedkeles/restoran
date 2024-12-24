@@ -1,0 +1,21 @@
+-- FUNCTION: public.set_default_adres()
+
+-- DROP FUNCTION IF EXISTS public.set_default_adres();
+
+CREATE OR REPLACE FUNCTION public.set_default_adres()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+
+    IF NEW.adres IS NULL OR NEW.adres = '' THEN
+        NEW.adres := 'Bilinmeyen Adres'; 
+    END IF;
+    RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.set_default_adres()
+    OWNER TO postgres;
