@@ -1,0 +1,22 @@
+-- FUNCTION: public.create_invoice()
+
+-- DROP FUNCTION IF EXISTS public.create_invoice();
+
+CREATE OR REPLACE FUNCTION public.create_invoice()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+   
+    IF NOT EXISTS (SELECT 1 FROM fatura WHERE siparisid = NEW.siparisid) THEN
+        INSERT INTO fatura (siparisid, toplamtutar, tarih)
+        VALUES (NEW.siparisid, NEW.tutar, CURRENT_DATE);
+    END IF;
+    RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.create_invoice()
+    OWNER TO postgres;
