@@ -1,0 +1,24 @@
+-- FUNCTION: public.get_max_siparis()
+
+-- DROP FUNCTION IF EXISTS public.get_max_siparis();
+
+CREATE OR REPLACE FUNCTION public.get_max_siparis(
+	)
+    RETURNS numeric
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+    max_value NUMERIC := 0;
+BEGIN
+    SELECT COALESCE(MAX(tutar), 0)
+      INTO max_value
+      FROM siparis;
+
+    RETURN max_value;  
+END;
+$BODY$;
+
+ALTER FUNCTION public.get_max_siparis()
+    OWNER TO postgres;
