@@ -1,0 +1,21 @@
+-- FUNCTION: public.update_masa_status_to_dolu()
+
+-- DROP FUNCTION IF EXISTS public.update_masa_status_to_dolu();
+
+CREATE OR REPLACE FUNCTION public.update_masa_status_to_dolu()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+    UPDATE masa
+    SET durum = 'dolu'
+    WHERE masaid = NEW.masaid;
+
+    RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.update_masa_status_to_dolu()
+    OWNER TO postgres;
