@@ -1,0 +1,21 @@
+-- FUNCTION: public.warn_duplicate_email()
+
+-- DROP FUNCTION IF EXISTS public.warn_duplicate_email();
+
+CREATE OR REPLACE FUNCTION public.warn_duplicate_email()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+
+    IF EXISTS (SELECT 1 FROM musteriler WHERE email = NEW.email) THEN
+        RAISE EXCEPTION 'Bu e-posta adresi (%), zaten mevcut.', NEW.email;
+    END IF;
+    RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.warn_duplicate_email()
+    OWNER TO postgres;
