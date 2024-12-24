@@ -1,0 +1,25 @@
+-- PROCEDURE: public.count_customers_by_city()
+
+-- DROP PROCEDURE IF EXISTS public.count_customers_by_city();
+
+CREATE OR REPLACE PROCEDURE public.count_customers_by_city(
+	)
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+    record RECORD;
+BEGIN
+    -- عرض عدد العملاء لكل مدينة
+    RAISE NOTICE 'Şehirlerdeki müşteri sayıları:';
+    FOR record IN
+        SELECT adres AS şehir, COUNT(*) AS müşteri_sayısı
+        FROM musteriler
+        GROUP BY adres
+        ORDER BY müşteri_sayısı DESC
+    LOOP
+        RAISE NOTICE 'Şehir: %, Müşteri Sayısı: %', record.şehir, record.müşteri_sayısı;
+    END LOOP;
+END;
+$BODY$;
+ALTER PROCEDURE public.count_customers_by_city()
+    OWNER TO postgres;
