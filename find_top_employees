@@ -1,0 +1,33 @@
+-- PROCEDURE: public.find_top_employees()
+
+-- DROP PROCEDURE IF EXISTS public.find_top_employees();
+
+CREATE OR REPLACE PROCEDURE public.find_top_employees(
+	)
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+    record RECORD;
+BEGIN
+    
+    RAISE NOTICE 'En üretken çalışanlar:';
+    FOR record IN
+        SELECT 
+            calisanid AS çalışan_id,
+            COUNT(*) AS tamamlanan_sipariş_sayısı
+        FROM 
+            siparis
+        WHERE 
+            durum = 'Tamamlandı'
+        GROUP BY 
+            calisanid
+        ORDER BY 
+            tamamlanan_sipariş_sayısı DESC
+    LOOP
+        RAISE NOTICE 'Çalışan ID: %, Tamamlanan Sipariş Sayısı: %',
+            record.çalışan_id, record.tamamlanan_sipariş_sayısı;
+    END LOOP;
+END;
+$BODY$;
+ALTER PROCEDURE public.find_top_employees()
+    OWNER TO postgres;
