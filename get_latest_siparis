@@ -1,0 +1,29 @@
+-- FUNCTION: public.get_latest_siparis()
+
+-- DROP FUNCTION IF EXISTS public.get_latest_siparis();
+
+CREATE OR REPLACE FUNCTION public.get_latest_siparis(
+	)
+    RETURNS TABLE(siparisid integer, musteriid integer, tarih date, teslim_tarih date, tutar numeric, durum character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+    RETURN QUERY
+    SELECT s.siparisid,
+           s.musteriid,
+           s.tarih,
+           s.teslim_tarih,  
+           s.tutar,
+           s.durum
+      FROM siparis AS s
+     ORDER BY s.teslim_tarih DESC 
+     LIMIT 1;
+END;
+$BODY$;
+
+ALTER FUNCTION public.get_latest_siparis()
+    OWNER TO postgres;
